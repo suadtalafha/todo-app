@@ -1,37 +1,21 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-import "./header.css"
-
-
-
-
-
-
-
-class Header extends React.Component {
-  render() {
- 
-    return(
-     
-      <>
-         
-         <header>
-
-<nav>
-
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">about</a></li>
-        <li><a href="#">connect with us</a></li>
-    </ul>
-</nav>
-</header>
-      </>
+import { Navbar, Button, Alignment } from "@blueprintjs/core";
+import { Link } from 'react-router-dom';
+export default function Header() {
+    return (
+        <>
+            <Navbar className="header" style={{ backgroundColor: "#c64756" }}>
+                <Navbar.Group align={Alignment.LEFT}>
+                    <Navbar.Heading className="title"><h2>Todo</h2></Navbar.Heading>
+                    <Navbar.Divider />
+                    <Link to='/'>
+                        <Button className="bp4-minimal" icon="home" text="Home" />
+                    </Link>
+                    <Link to='/settingsForm'>
+                        <Button className='bp3-minimal' icon='settings' text='Settings' />
+                    </Link>
+                </Navbar.Group>
+            </Navbar>
+        </>
     );
-  }
 }
-
-export default (Header) ;
