@@ -1,50 +1,56 @@
-import React, { useEffect, useState } from "react";
-import useForm from "../form/form";
+import React, { useEffect, useState,useContext } from "react";
+import useForm from "../../hooks/form";
 import { v4 as uuid } from "uuid";
 import List from "../list/List";
-// import "./todo.css";
+import "./todo.css";
 import Form from "../form/form";
+import { SettingsContext } from "../../components/contex/contex";
 const ToDo = () => {
+  const settings = useContext(SettingsContext);
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
 
   function addItem(item) {
+    console.log(item);
     item.id = uuid();
     item.complete = false;
     setList([...list, item]);
-
   }
-//delete 
+//  delete items and use filter methode 
   function deleteItem(id) {
-    const items = list.filter((item) => item.id !== id);
-    //change the list 
-    setList(items);
+    const itemsDeleted = list.filter((item) => item.id !== id);
+    setList(itemsDeleted);
   }
+
   function toggleComplete(id) {
+    // itreat through 
     const items = list.map((item) => {
       if (item.id == id) {
         item.complete = !item.complete;
       }
       return item;
     });
+
     setList(items);
   }
-
+// use effect function 
   useEffect(() => {
-    let incompleteCount = list.filter((item) => !item.complete).length;
-    setIncomplete(incompleteCount);
-    document.title = `To Do List: ${incomplete}`;
-  }, [list]);
+    let Count = list.filter((item) => !item.complete);
+    setIncomplete(Count);
+    document.title = `lists ${incomplete.length}`;
+  }, [list,settings.showCompleted]);
+
 
   return (
     <>
-      <header>
+    
+      <header style={{ width: "900px", margin: "0 auto" }}>
         <nav
           className="bp3-navbar .modifier "
-          style={{ color: "rgb(121, 115, 115)", backgroundColor: "#270b27f6" ,textAlign:"center"}}
+          style={{ color: "blue", backgroundColor: "rgb(0 17 31)" }}
         >
-          <h3>To Do List Manger: ({incomplete}) Items Pending</h3>
+          <h2>To Do List: {incomplete.length} Items and {list.length - incomplete.length} done</h2>
         </nav>
       </header>
       <div className="div-flex">
@@ -53,7 +59,7 @@ const ToDo = () => {
         handleSubmit={handleSubmit}
       />
         <div>
-          <List list={list}  toggleComplete={toggleComplete} deleteItem={deleteItem}/>
+          <List list={list} incomplete={incomplete} toggleComplete={toggleComplete} deleteItem={deleteItem}/>
         </div>
       </div>
     </>
