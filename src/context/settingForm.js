@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { FormGroup, InputGroup } from '@blueprintjs/core';
-import { SettingsContext } from './context';
+import { SettingsContext } from './contex';
 
 export default function Form() {
   const settings = useContext(SettingsContext);

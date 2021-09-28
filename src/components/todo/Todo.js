@@ -1,10 +1,10 @@
 import React, { useEffect, useState,useContext } from "react";
-import useForm from "../../hooks/form";
+import useForm from "../../hooks/form.js";
 import { v4 as uuid } from "uuid";
 import List from "../list/List";
-import "./todo.css";
-import Form from "../form/form";
-import { SettingsContext } from "../../components/contex/contex";
+
+import Form from "../form/Form.js";
+import { SettingsContext } from "../../context/contex";
 const ToDo = () => {
   const settings = useContext(SettingsContext);
   const [list, setList] = useState([]);
@@ -17,14 +17,13 @@ const ToDo = () => {
     item.complete = false;
     setList([...list, item]);
   }
-//  delete items and use filter methode 
+
   function deleteItem(id) {
-    const itemsDeleted = list.filter((item) => item.id !== id);
-    setList(itemsDeleted);
+    const items = list.filter((item) => item.id !== id);
+    setList(items);
   }
 
   function toggleComplete(id) {
-    // itreat through 
     const items = list.map((item) => {
       if (item.id == id) {
         item.complete = !item.complete;
@@ -34,23 +33,22 @@ const ToDo = () => {
 
     setList(items);
   }
-// use effect function 
+
   useEffect(() => {
-    let Count = list.filter((item) => !item.complete);
-    setIncomplete(Count);
-    document.title = `lists ${incomplete.length}`;
+    let incompleteCount = list.filter((item) => !item.complete);
+    setIncomplete(incompleteCount);
+    document.title = `To Do List: ${incomplete.length}`;
   }, [list,settings.showCompleted]);
 
 
   return (
     <>
-    
-      <header style={{ width: "900px", margin: "0 auto" }}>
+      <header style={{ width: "1000px", margin: "0 auto" }}>
         <nav
           className="bp3-navbar .modifier "
-          style={{ color: "blue", backgroundColor: "rgb(0 17 31)" }}
+          style={{ color: "white", backgroundColor: "rgb(31 17 31)" }}
         >
-          <h2>To Do List: {incomplete.length} Items and {list.length - incomplete.length} done</h2>
+          <h2>To Do List: {incomplete.length} Items Pending, and {list.length - incomplete.length} Completed</h2>
         </nav>
       </header>
       <div className="div-flex">
