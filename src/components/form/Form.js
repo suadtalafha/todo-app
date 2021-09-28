@@ -1,16 +1,17 @@
 import React from 'react';
 import { Card, Button, FormGroup, InputGroup } from '@blueprintjs/core';
+import Auth from '../login/auth';
 
 export default function Form({ handleSubmit, handleChange }) {
   return (
-    <Card  style={{backgroundColor:"#3a053ab4"}}>
-      <h2>Add  Item to do </h2>
+    <Card className="mainItem" style={{backgroundColor:"#76c393"}}>
+      <h4>Add to do list</h4>
       <form onSubmit={handleSubmit}>
         <FormGroup labelFor="text-input" labelInfo="(required)">
-          <label>To Do Item </label>
+          <label>To Do ietem</label>
           <InputGroup
             onChange={handleChange}
-            name="enter"
+            name="text"
             id="text-input"
             placeholder="Item Details"
           />
@@ -34,9 +35,11 @@ export default function Form({ handleSubmit, handleChange }) {
             name="difficulty"
           />
           </div>
+          <Auth capability="create">
 <div >
-          <Button style={{backgroundColor:"gray"}} className='button' type="submit">Add </Button>
+          <Button style={{backgroundColor:"lightgray"}} className='button' type="submit">Add Item</Button>
           </div>
+          </Auth>
         </FormGroup>
       </form>
     </Card>
